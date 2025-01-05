@@ -39,7 +39,7 @@ export default async function Home({
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
-          {query ? `Showing results for ${query}` : "Trending Pitches"}
+          {query ? `Showing results for ${query}` : "All Startups"}
         </p>
         <ul className="mt-7 card_grid">
           {posts?.length > 0 ? (
