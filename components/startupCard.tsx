@@ -1,26 +1,13 @@
 import { EyeIcon } from "lucide-react";
 import Image from "next/image";
-import { title } from "process";
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import { Startup, Author } from "@/sanity/types";
 
-const startupCard = ({
-  post,
-}: {
-  post: {
-    id: number;
-    title: string;
-    _createdAt: string;
-    author: { name: string; image: string; _id: string };
-    views: number;
-    description: string;
-    image: string;
-    _id: string;
-    category: string;
-  };
-}) => {
+export type StartupTypeCard = Omit<Startup, "author"> & { author?: Author };
+const startupCard = ({ post }: { post: StartupTypeCard }) => {
   return (
     <li className="startup-card group">
       <div className="flex-between">
@@ -37,17 +24,19 @@ const startupCard = ({
             <p className="text-16-medium line-clamp-1">{post.author?.name}</p>
           </Link>
           <Link href={`/startup/${post._id}`}>
-            <h3 className="text-26-semibold line-clamp-1">{title}</h3>
+            <h3 className="text-26-semibold line-clamp-1">{post.title}</h3>
           </Link>
         </div>
         <Link href={`/user/${post.author?._id}`}>
-          <Image
-            src={post.author?.image}
-            alt={post.author?.name}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
+          {post.author?.image && (
+            <Image
+              src={post.author?.image}
+              alt={post.author?.name || "image"}
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+          )}
         </Link>
       </div>
 
